@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.cristoreiapi.atacado.domain.Cliente;
+import com.cristoreiapi.atacado.domain.Endereco;
 import com.cristoreiapi.atacado.domain.Pedido;
+import com.cristoreiapi.atacado.respository.ClienteRepository;
+import com.cristoreiapi.atacado.respository.EnderecoRepository;
 import com.cristoreiapi.atacado.respository.PedidosRepository;
 import com.cristoreiapi.atacado.services.exceptions.PedidoNaoEncontratoException;
 
@@ -16,6 +20,12 @@ public class PedidosService {
 
 	@Autowired
 	private PedidosRepository pedidosRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository; 
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
 	
 	public List<Pedido> listar(){
 		return pedidosRepository.findAll();
@@ -51,6 +61,18 @@ public class PedidosService {
 	
 	private void verificarExistencia(Pedido pedido) {
 		buscar(pedido.getIdPedido());
+	}
+	
+	public Endereco salvarEndereco(Long pedidoId, Endereco endereco) {
+		Optional<Pedido> pedido = buscar(pedidoId);
+		endereco.setPedido(pedido.get());
+		return enderecoRepository.save(endereco);
+	}
+	
+	public Cliente salvarCliente(Long pedidoId, Cliente cliente) {
+		Optional<Pedido> pedido = buscar(pedidoId);
+		cliente.setPedido(pedido.get());
+		return clienteRepository.save(cliente);
 	}
 	
 }

@@ -13,24 +13,18 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
-public class Endereco {
+public class Cliente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; 
 
 	@JsonInclude(Include.NON_NULL)
-	private String logradouro; 
+	private String nome;
 	
 	@JsonInclude(Include.NON_NULL)
-	private Long numero;
-	
-	@JsonInclude(Include.NON_NULL)
-	private String cidade; 
-	
-	@JsonInclude(Include.NON_NULL)
-	private String cep;
-	
+	private String cpf;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name ="PEDIDO_ID")
 	@JsonIgnore
@@ -44,44 +38,29 @@ public class Endereco {
 		this.id = id;
 	}
 
-	public String getLogradouro() {
-		return logradouro;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public Long getNumero() {
-		return numero;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setNumero(Long numero) {
-		this.numero = numero;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public Pedido getPedido() {
 		return pedido;
 	}
 
-	public void setPedido(Pedido pedido2) {
-		this.pedido = pedido2;
-	}
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	} 
+	
 	
 }

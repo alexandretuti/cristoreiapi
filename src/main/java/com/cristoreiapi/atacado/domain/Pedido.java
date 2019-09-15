@@ -7,8 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -27,6 +28,7 @@ public class Pedido {
 	private String item;
 	
 	@JsonInclude(Include.NON_NULL)
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataEntrega;
 	
 	@JsonInclude(Include.NON_NULL)
@@ -36,8 +38,12 @@ public class Pedido {
 	private String observacao;
 	
 	@JsonInclude(Include.NON_NULL)
-	@Transient
+	@OneToMany(mappedBy ="pedido")
 	private List<Endereco> endereco;
+	
+	@JsonInclude(Include.NON_NULL)
+	@OneToMany(mappedBy ="pedido")
+	private List<Cliente> cliente;
 	
 	/*Construtor*/ 
 	public Pedido() {}
@@ -107,5 +113,14 @@ public class Pedido {
 	public void setIdPedido(Long idPedido) {
 		this.idPedido = idPedido;
 	}
+
+	public List<Cliente> getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(List<Cliente> cliente) {
+		this.cliente = cliente;
+	}
+	
 	
 }
